@@ -1,0 +1,28 @@
+#!/usr/libexec/ui/cscript
+version 1.0;
+
+ns junos = "http://xml.juniper.net/junos/*/junos";
+ns xnm = "http://xml.juniper.net/xnm/1.1/xnm";
+ns jcs = "http://xml.juniper.net/junos/commit-scripts/1.0";
+
+import "../import/junos.xsl";
+
+match / {
+    <op-script-results> {
+        var $vcp1-rpc = <command> "request virtual-chassis vc-port set pic-slot 0 port {{vc_port1}}";
+        var $vcp2-rpc = <command> "request virtual-chassis vc-port set pic-slot 0 port {{vc_port2}}";
+        var $execute1 = jcs:invoke( $vcp1-rpc );
+        var $execute2 = jcs:invoke( $vcp2-rpc );
+
+        var $jnx = jcs:open();
+        var $get = <file-copy> {
+            <source> 'http://{{ztp_server}}/devices/{{hostname}}/switch_config.conf';
+            <destination> '/var/tmp/switch_config.conf';
+            <staging-directory> '/var/tmp';
+            }
+        var $got = jcs:execute( $jnx, $get );
+        var $do_load = <load-confuration action="override" url="/var/tmp/switch_config.conf" format="text">;
+        var $did_load = jcs:execute( $jnx, $do_load );
+        var $commit = jcs:execute( $jnx, 'commit-confuration' );
+      }
+  }

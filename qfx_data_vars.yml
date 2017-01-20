@@ -1,0 +1,31 @@
+---
+hostname: tes-sw101-pod17
+location: tes
+
+#Static DHCP entries for ZTP config generation
+#ztp_subnet: Planned for 2.0 release with auto update of dhcpd.conf file
+ztp_sw0_ip: 10.202.15.9
+ztp_sw1_ip: 10.202.15.10
+ztp_gw: 10.202.15.1
+ztp_netmask: 255.255.255.0
+ztp_server: 10.24.2.5
+
+#SW0 Hardware Info
+sw0_serialnum: FG23445242
+sw0_mac: 40:71:83:57:0d:40
+#SW1 Hardware Info
+sw1_serialnum: FG23445101
+sw1_mac: 40:71:83:51:11:00
+
+#QFX VC Configuration variables
+local_uplink_port0: et-0/0/52
+local_uplink_port1: et-1/0/52
+spine_ae_num: ae3
+spine_uplink_port0: et-0/0/9
+spine_uplink_port1: et-1/0/9
+management_vlan: 101
+management_gw: 202.15.6.1
+management_ip: 202.15.6.10
+management_prefix: /25
+vc_port1: 48
+vc_port2: 49

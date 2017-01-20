@@ -1,0 +1,25 @@
+#DHCP Host 1 - Place this under the proper subnet section 
+host {{hostname}}-sw0 {
+  hardware ethernet {{sw0_mac}};
+  fixed-address {{ztp_sw0_ip}};
+  option host-name "{{hostname}}";
+  option routers                  {{ztp_gw}};
+  option subnet-mask              {{ztp_netmask}};
+  option option-150 {{ztp_server}};
+  option expztp.transfer-mode "http";
+  option expztp.config-file-name "devices/{{hostname}}/qfx-install-script.slax";
+  option expztp.image-file-name "images/jinstall-qfx-5-14.1X53-D40.8-domestic-signed.tgz";
+}
+
+#DHCP Host 2 - Place this under the proper subnet section
+host {{hostname}}-sw1 {
+  hardware ethernet {{sw1_mac}};
+  fixed-address {{ztp_sw1_ip}};
+  option host-name "{{hostname}}";
+  option routers                  {{ztp_gw}};
+  option subnet-mask              {{ztp_netmask}};
+  option option-150 {{ztp_server}};
+  option expztp.transfer-mode "http";
+  option expztp.config-file-name "devices/{{hostname}}/qfx-install-script.slax";
+  option expztp.image-file-name "images/jinstall-qfx-5-14.1X53-D40.8-domestic-signed.tgz";
+}

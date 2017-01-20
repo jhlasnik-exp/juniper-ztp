@@ -1,0 +1,26 @@
+---
+  - name: Loading configurations from jinja2 template
+    hosts: localhost
+    roles:
+     - Juniper.junos
+    connection: local
+    gather_facts: no
+    vars:
+      - qfx_dhcp_template: "qfx-dhcp-template.j2"
+      - qfx_install_template: "qfx-install-template.j2"
+      - qfx_switch_template: "qfx-switch-template.j2"
+    vars_files:
+      - "qfx_data_vars.yml"
+
+    tasks:
+      - name: Create directory for configurations and scripts
+        file: path=devices/{{hostname}} state=directory
+
+      - name: Create QFX configuration
+        template: src={{ qfx_switch_template }} dest="devices/{{hostname}}/switch_config.conf"
+
+      - name: Create Slax script
+        template: src={{ qfx_install_template }} dest="devices/{{hostname}}/qfx-install-script.slax"
+
+      - name: Create DHCP configuration
+        template: src={{ qfx_dhcp_template }} dest="devices/{{hostname}}/qfx-dhcp-configuration.txt"
